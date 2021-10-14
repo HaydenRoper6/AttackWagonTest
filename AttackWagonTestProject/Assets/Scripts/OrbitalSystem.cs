@@ -56,13 +56,13 @@ public class OrbitalSystem : MonoBehaviour
 
         if(flipDirection)
         {
-            angle -= Time.deltaTime;
+            angle = angle -Time.deltaTime * speed;
         }
         else{
-            angle += Time.deltaTime;
+            angle = angle + Time.deltaTime * speed;
         }
         //Keep angle between 0 and 2PI radians
-        angle = (angle * speed) % (2.0f * Mathf.PI);
+        angle = angle  % (2.0f * Mathf.PI);
         AdjustOrbits(angle);    
         
     }

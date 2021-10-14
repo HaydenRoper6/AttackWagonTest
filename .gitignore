@@ -1,8 +1,9 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
+/[Aa]ttackWagonTestProject/[Ll]ibrary/
+/[Aa]ttackWagonTestProject/[Tt]emp/
+/[Aa]ttackWagonTestProject/[Oo]bj/
+/[Aa]ttackWagonTestProject/[Bb]uild/
+/[Aa]ttackWagonTestProject/[Bb]uilds/
+/[Aa]ttackWagonTestProject/[Ii]mportedAssets/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory

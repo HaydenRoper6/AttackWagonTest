@@ -5,29 +5,65 @@ using UnityEngine;
 public class OrbitalSystem : MonoBehaviour
 {
     public GameObject baseSphere;
-    public List<GameObject> orbitingSpheres;
+    public List<OrbitalSphere> orbitingSpheres;
     public float speed = 1f;
+    public bool flipDirection = false;
 
     private Vector3 baseSphereCenter;
     [SerializeField]
     private float angle = 0f;
-
+    [SerializeField]
+    private float radius;
     // Start is called before the first frame update
     void Start()
     {
         baseSphereCenter = baseSphere.transform.position;
+        radius = Vector3.Distance(baseSphereCenter, orbitingSpheres[0].transform.position);
+
+        foreach(OrbitalSphere sphere in orbitingSpheres)
+        {
+            sphere.SetOrbitRadius(baseSphereCenter);
+        }
+    }
+
+    private void AdjustOrbits(float angle)
+    {
+        foreach(OrbitalSphere sphere in  orbitingSpheres)
+        {
+            sphere.AdjustOrbit(angle);
+        }
+    }
+
+      private void SwapColors()
+    {
+        foreach(OrbitalSphere sphere in  orbitingSpheres)
+        {
+            sphere.SwapColor();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit; 
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+            if ( ! Physics.Raycast (ray,out hit,500.0f)) {
+                SwapColors();
+            }
+        }
+
+        if(flipDirection)
+        {
+            angle -= Time.deltaTime;
+        }
+        else{
+            angle += Time.deltaTime;
+        }
         //Keep angle between 0 and 2PI radians
-        angle = (angle + Time.deltaTime) % (2.0f * Mathf.PI);
-        float x = Mathf.Cos(angle);
-        float y = Mathf.Sin(angle);
-        float z = 0;
-        Vector3 distanceBetweenSpheres = orbitingSpheres[0].transform.position - baseSphereCenter;
-        orbitingSpheres[0].transform.position = new Vector3(x,y,z) ; 
+        angle = (angle * speed) % (2.0f * Mathf.PI);
+        AdjustOrbits(angle);    
         
     }
 }

@@ -27,7 +27,7 @@ public class OrbitalSystem : MonoBehaviour
         float y = Mathf.Sin(angle);
         float z = 0;
         Vector3 distanceBetweenSpheres = orbitingSpheres[0].transform.position - baseSphereCenter;
-        orbitingSpheres[0].transform.position = new Vector3(x,y,z) + distanceBetweenSpheres; 
+        orbitingSpheres[0].transform.position = new Vector3(x,y,z) ; 
         
     }
 }

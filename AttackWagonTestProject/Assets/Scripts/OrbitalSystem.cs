@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OrbitalSystem : MonoBehaviour
 {
+    public Controller controller;
     public GameObject baseSphere;
     public List<OrbitalSphere> orbitingSpheres;
     public float speed = 1f;
@@ -24,6 +25,18 @@ public class OrbitalSystem : MonoBehaviour
         {
             sphere.SetOrbitRadius(baseSphereCenter);
         }
+        if(controller != null)
+        {
+            controller.PrimaryMouseButtonClickedEvent.AddListener(SwapColors);
+        }
+        
+    }
+
+    private bool DidMouseClickObject()
+    {
+        RaycastHit hit; 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+        return Physics.Raycast(ray,out hit,500.0f); 
     }
 
     private void AdjustOrbits(float angle)
@@ -34,17 +47,22 @@ public class OrbitalSystem : MonoBehaviour
         }
     }
 
-      private void SwapColors()
+    private void SwapColors()
     {
-        foreach(OrbitalSphere sphere in  orbitingSpheres)
+        if(!DidMouseClickObject())
         {
-            sphere.SwapColor();
+            foreach(OrbitalSphere sphere in  orbitingSpheres)
+            {
+                sphere.SwapColor();
+            }
         }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetMouseButtonDown(0))
         {
             RaycastHit hit; 
@@ -53,6 +71,7 @@ public class OrbitalSystem : MonoBehaviour
                 SwapColors();
             }
         }
+        */
 
         if(flipDirection)
         {

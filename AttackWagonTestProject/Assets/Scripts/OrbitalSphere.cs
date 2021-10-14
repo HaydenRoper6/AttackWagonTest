@@ -6,8 +6,8 @@ using UnityEngine;
 public class OrbitalSphere : MonoBehaviour
 {
     private float orbitRadius = 1.0f;
-    private float angleRelativeToBaseSphere = 0.0f;
-    private bool colorSwapped = false;
+    //private float angleRelativeToBaseSphere = 0.0f;
+    //private bool colorSwapped = false;
     public Texture texture1;
     public Texture texture2;
     
@@ -18,8 +18,8 @@ public class OrbitalSphere : MonoBehaviour
     {
         orbitRadius = Vector3.Distance(baseSpherePosition, transform.position);
         //Find angle between starting position and base sphere
-        Vector3 targetDir = baseSpherePosition - transform.position;
-        angleRelativeToBaseSphere = Vector3.Angle(targetDir, transform.forward);
+        //Vector3 targetDir = baseSpherePosition - transform.position;
+        //angleRelativeToBaseSphere = Vector3.Angle(targetDir, transform.forward);
     }
 
     public void SwapColor(){

@@ -17,13 +17,15 @@ public class Controller : MonoBehaviour
         MouseScrollUpdateEvent = new UnityEvent<float>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Send signals that the mouse's primary button has been clicked
         if(Input.GetMouseButtonDown(0))
         {
             PrimaryMouseButtonClickedEvent.Invoke();
         }
+
+        //Send signal that the mouse has been scrolled
         if(scrollDeltaY != Input.mouseScrollDelta.y )
         {
             scrollDeltaY = Input.mouseScrollDelta.y * scrollSensitivity;

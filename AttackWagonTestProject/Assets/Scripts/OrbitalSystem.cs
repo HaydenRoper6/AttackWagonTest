@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class OrbitalSystem : MonoBehaviour
 {
+    //Used to respond to input events
     public Controller controller;
+    //Base used to determine system origin
     public GameObject baseSphere;
+    //orbitlas of the base
     public List<OrbitalSphere> orbitingSpheres;
     public float speed = 1f;
     public bool flipDirection = false;
-
+    
+    //System origin
     private Vector3 baseSphereCenter;
     [SerializeField]
     private float angle = 0f;
-    [SerializeField]
-    private float radius;
-    // Start is called before the first frame update
+    
     void Start()
     {
         baseSphereCenter = baseSphere.transform.position;
-        radius = Vector3.Distance(baseSphereCenter, orbitingSpheres[0].transform.position);
 
+        //Determine orbit radius for each orbital
         foreach(OrbitalSphere sphere in orbitingSpheres)
         {
             sphere.SetOrbitRadius(baseSphereCenter);
         }
+        //Subscribe to input click events for color swaps
         if(controller != null)
         {
             controller.PrimaryMouseButtonClickedEvent.AddListener(SwapColors);
@@ -32,6 +35,7 @@ public class OrbitalSystem : MonoBehaviour
         
     }
 
+    //Determine if an object was clicked by the mouse
     private bool DidMouseClickObject()
     {
         RaycastHit hit; 
@@ -39,6 +43,7 @@ public class OrbitalSystem : MonoBehaviour
         return Physics.Raycast(ray,out hit,500.0f); 
     }
 
+    //Move each orbital to its next position
     private void AdjustOrbits(float angle)
     {
         foreach(OrbitalSphere sphere in  orbitingSpheres)
@@ -47,32 +52,22 @@ public class OrbitalSystem : MonoBehaviour
         }
     }
 
-    private void SwapColors()
+    //Change each orbitals color and texture
+    private void SwapColorsAndTextures()
     {
         if(!DidMouseClickObject())
         {
             foreach(OrbitalSphere sphere in  orbitingSpheres)
             {
-                sphere.SwapColor();
+                sphere.SwapColorAndTexture();
             }
         }
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        /*
-        if(Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit; 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
-            if ( ! Physics.Raycast (ray,out hit,500.0f)) {
-                SwapColors();
-            }
-        }
-        */
-
+        //Reverse direction if selected
         if(flipDirection)
         {
             angle = angle -Time.deltaTime * speed;
@@ -80,6 +75,7 @@ public class OrbitalSystem : MonoBehaviour
         else{
             angle = angle + Time.deltaTime * speed;
         }
+
         //Keep angle between 0 and 2PI radians
         angle = angle  % (2.0f * Mathf.PI);
         AdjustOrbits(angle);    

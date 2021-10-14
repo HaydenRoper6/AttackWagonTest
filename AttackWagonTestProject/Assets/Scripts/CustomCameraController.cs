@@ -5,8 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CustomCameraController : MonoBehaviour
 {
+    //Used to respond to input events
     public Controller controller;
+    //Used to affect lerp as you zoom
     public float zoomSpeed = 1f;
+
+    //Min and max zoom values
     public float fovMax = 90f;
     public float fovMin = 1f;
 
@@ -14,14 +18,14 @@ public class CustomCameraController : MonoBehaviour
     private float currentFov;
     private Camera mainCamera;
     
-
-    // Start is called before the first frame update
     void Start()
     {
+        //subscribe to scroll update events
         if(controller != null)
         {
             controller.MouseScrollUpdateEvent.AddListener(UpdateCameraZoom);
         }
+        //initialize camera FOV
         mainCamera = GetComponent<Camera>();
         currentFov = fovMax;
         UpdateCameraZoom(0.0f);  

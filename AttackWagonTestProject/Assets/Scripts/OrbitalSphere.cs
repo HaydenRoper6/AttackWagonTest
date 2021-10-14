@@ -5,33 +5,30 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class OrbitalSphere : MonoBehaviour
 {
-    private float orbitRadius = 1.0f;
-    //private float angleRelativeToBaseSphere = 0.0f;
-    //private bool colorSwapped = false;
+    private float orbitRadius = 0.0f;
     public Texture texture1;
     public Texture texture2;
     
     private void Start() {
-        SwapColor();
+        //initially set the color/texture
+        SwapColorAndTexture();
     }
+
+    //determine orbit radius 
+    //determined by starting sphere's center's world distance from base sphere's center
     public void SetOrbitRadius(Vector3 baseSpherePosition)
     {
         orbitRadius = Vector3.Distance(baseSpherePosition, transform.position);
-        //Find angle between starting position and base sphere
-        //Vector3 targetDir = baseSpherePosition - transform.position;
-        //angleRelativeToBaseSphere = Vector3.Angle(targetDir, transform.forward);
     }
 
-    public void SwapColor(){
-        
-         Color randomColor = new Color(
-            Random.Range(0f, 1f), //Red
-            Random.Range(0f, 1f), //Green
-            Random.Range(0f, 1f), //Blue
-            1 //Alpha
-        );
+    //Change the color and texture to something random
+    public void SwapColorAndTexture()
+    {
+        //Random color
+        Color randomColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
         gameObject.GetComponent<Renderer>().material.color = randomColor;
         
+        //Swap Textures
         if(Random.Range(0f,1f) > 0.5f)
         {
             gameObject.GetComponent<Renderer>().material.mainTexture = texture1;
@@ -41,6 +38,7 @@ public class OrbitalSphere : MonoBehaviour
         }
     }
 
+    //Adjusts the sphere's position within the orbital system based off circular trig functions
     public void AdjustOrbit(float angle){
         
         //this could be expande to dynamically determine which functions should adjust x/y/z based on starting position relative to base sphere
@@ -51,10 +49,6 @@ public class OrbitalSphere : MonoBehaviour
 
         //keep orbit radius consistent
         transform.position = orbitPath * orbitRadius;
-
-        //Rotate the object to align orbit path with original position relative base sphere
-        //transform.rotation = Quaternion.Euler(angleRelativeToBaseSphere);
-
     }
 
 }

@@ -6,18 +6,16 @@ using UnityEngine;
 public class CustomCameraController : MonoBehaviour
 {
 
-    public float defaultFov = 45f;
     public float sensitivity = 1f;
     public float zoomSpeed = 1f;
-
-    public float fovMax = 30f;
+    public float fovMax = 90f;
     public float fovMin = 1f;
+
     [SerializeField]
     private float currentFov;
     [SerializeField]
     private float scrollValue = 0f;
-    private float zoomedPosition = 0f;
-    
+
     private Camera mainCamera;
     
 
@@ -25,7 +23,7 @@ public class CustomCameraController : MonoBehaviour
     void Start()
     {
         mainCamera = GetComponent<Camera>();
-        currentFov = defaultFov;
+        currentFov = fovMax;
         UpdateCameraZoom();  
     }
 

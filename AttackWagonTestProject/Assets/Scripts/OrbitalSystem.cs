@@ -30,16 +30,16 @@ public class OrbitalSystem : MonoBehaviour
         //Subscribe to input click events for color swaps
         if(controller != null)
         {
-            controller.PrimaryMouseButtonClickedEvent.AddListener(SwapColors);
+            controller.PrimaryMouseButtonClickedEvent.AddListener(SwapColorsAndTextures);
         }
         
     }
 
     //Determine if an object was clicked by the mouse
-    private bool DidMouseClickObject()
+    private bool DidMouseClickObject(Vector3 mousePos)
     {
         RaycastHit hit; 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
         return Physics.Raycast(ray,out hit,500.0f); 
     }
 
@@ -53,9 +53,9 @@ public class OrbitalSystem : MonoBehaviour
     }
 
     //Change each orbitals color and texture
-    private void SwapColorsAndTextures()
+    private void SwapColorsAndTextures(Vector3 mousePos)
     {
-        if(!DidMouseClickObject())
+        if(!DidMouseClickObject(mousePos))
         {
             foreach(OrbitalSphere sphere in  orbitingSpheres)
             {

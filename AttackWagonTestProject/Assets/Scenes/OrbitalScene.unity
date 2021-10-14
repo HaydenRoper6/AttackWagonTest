@@ -583,6 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1179349151}
   groundPlane: {fileID: 1401568565}
+  thrust: 500
 --- !u!54 &806245123
 Rigidbody:
   m_ObjectHideFlags: 0

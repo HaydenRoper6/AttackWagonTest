@@ -40,14 +40,19 @@ public class OrbitalSphere : MonoBehaviour
         }
     }
 
-    //Adjusts the sphere's position within the orbital system based off circular trig functions
-    public void AdjustOrbit(float angle){
-        
-        //this could be expande to dynamically determine which functions should adjust x/y/z based on starting position relative to base sphere
+    //This could be a good spot to expand scope and maybe randomize the axes of the cos and sin functions
+    private Vector3 ApplyOrbitFunctions(float angle)
+    {
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
         float z = 0;
-        Vector3 orbitPath = new Vector3(x,y,z) + basePosition;
+        return new Vector3(x,y,z) + basePosition;
+    }
+
+    //Adjusts the sphere's position within the orbital system based off circular trig functions
+    public void AdjustOrbit(float angle){
+        //this could be expande to dynamically determine which functions should adjust x/y/z based on starting position relative to base sphere
+        Vector3 orbitPath = ApplyOrbitFunctions(angle);      
 
         //keep orbit radius consistent
         transform.position = orbitPath * orbitRadius;

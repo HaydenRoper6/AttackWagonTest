@@ -34,6 +34,7 @@ public class CustomCameraController : MonoBehaviour
     //Changes field of view by lerping between current fov and fov + mouse wheel change
     //There are other solutions where you physically move the camera but I chose to go with FOV manipulation 
     void UpdateCameraZoom(float scrollChange){
+        zoomSpeed = Mathf.Clamp(zoomSpeed,0.2f,1f);
         currentFov = Mathf.Lerp(currentFov, currentFov + scrollChange,zoomSpeed);
         currentFov = Mathf.Clamp(currentFov, fovMin, fovMax);
         mainCamera.fieldOfView = currentFov;

@@ -25,5 +25,6 @@ public class Controller : MonoBehaviour
             scrollDeltaY = Input.mouseScrollDelta.y * scrollSensitivity;
             MouseScrollUpdateEvent.Invoke(scrollDeltaY);
         }
+
     }
 }

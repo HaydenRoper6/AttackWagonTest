@@ -8,16 +8,22 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BouncingSphere : MonoBehaviour
 {
+    //Input controller
     public Controller controller;
+    //Bounce noise
     private AudioSource bounceNoiseEffect;
+    //Animation controller
     private Animator animationController;
+    //Plane it will bounce on
     public GameObject groundPlane;
+    //Force multiplier when clicking on ball
     public float thrust = 10f;
+    
     private Vector3 groundPosition;
     private float radius;
     private Rigidbody physicsRB;
     private bool hasBallBeenHit = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         animationController = GetComponent<Animator>();
@@ -43,39 +49,34 @@ public class BouncingSphere : MonoBehaviour
         }
     }
 
+    //When ball makes contact with the ground from falling, animate the ball
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "groundSurface" && hasBallBeenHit)
         {
             bounceNoiseEffect.Play(0);
-            //Play animation
             animationController.SetBool("InAir", false);
-            StartCoroutine(PlayBounceAnimation());
-              
+            StartCoroutine(PlayBounceAnimation());   
         }
     }
 
+    //play bounce animation then change state of animator back to in air
     private IEnumerator PlayBounceAnimation(){
         yield return new WaitForSeconds(animationController.GetCurrentAnimatorStateInfo(0).length);
         animationController.SetBool("InAir", true); 
     }
 
+    //Use raycast to find target of mouse click
     private bool DidMouseHitMe(Vector3 mousePosition)
     {
         RaycastHit hit; 
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         Physics.Raycast(ray,out hit,500.0f);
+
         if(hit.transform != null)
         {
             return hit.transform.gameObject == gameObject;
         }
         return false;
-        
-        //return  
-    }
-
-    void Update()
-    {
-        
     }
 }

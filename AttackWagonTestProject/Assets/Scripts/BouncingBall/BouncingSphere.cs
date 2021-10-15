@@ -16,6 +16,7 @@ public class BouncingSphere : MonoBehaviour
     private Vector3 groundPosition;
     private float radius;
     private Rigidbody physicsRB;
+    private bool hasBallBeenHit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class BouncingSphere : MonoBehaviour
         transform.position = new Vector3(-0.5f,(radius+groundPosition.y),2f);
         controller.PrimaryMouseButtonClickedEvent.AddListener(BounceBall);
         animationController.SetBool("InAir", true); 
+        
     }
 
     //If the ball is clicked, apply an upwards force on it
@@ -35,6 +37,7 @@ public class BouncingSphere : MonoBehaviour
         if(DidMouseHitMe(mousePosition))
         {
             animationController.SetBool("InAir", true);
+            hasBallBeenHit = true;
             //apply force to bounce ball
             physicsRB.AddForce(transform.up * thrust);
         }
@@ -42,7 +45,7 @@ public class BouncingSphere : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "groundSurface" && animationController.GetBool("InAir"))
+        if(collision.gameObject.tag == "groundSurface" && hasBallBeenHit)
         {
             bounceNoiseEffect.Play(0);
             //Play animation
